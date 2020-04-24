@@ -13,6 +13,7 @@ script:
 - dotnet --version
 - dotnet restore	
 - dotnet build
+- dir .\\bin\\Debug
 - dir .\\bin\\Debug\\netcoreapp3.0
 
   # This command generates a release.zip file.
