@@ -1,0 +1,29 @@
+language: csharp
+solution: Vigenere_Cipher.sln
+
+os: windows
+mono: none
+
+addons:
+  artifacts: true
+
+script:
+- choco install dotnetcore-sdk
+- choco install 7zip.install
+- dotnet --version
+- dotnet restore	
+- dotnet build
+- dir .\\bin\\Debug\\netcoreapp3.0
+
+  # This command generates a release.zip file.
+- 7z a -tzip release.zip .\\bin\\Debug\\netcoreapp3.0
+- dir
+deploy:
+  provider: releases
+ # overwrite:true
+  api_key:
+    secure: "e0AhZav9W1OtkBolIrOf0q7KnhvDQXbeKak9HcSkI9uO59zK0Fp/pRihnzD+HraCOKhUz4fgBTVju7nsZcyMCIJj5k2WLjzPFj13psT6/XR4CJDhSTK4qnKBFwHtXW9UWe3MjV1wRuhLBdnGeWlvCX+8UkoIPgAZiOqNY/h6DQXnNPQqsy6uACjgOlZncq4v+N/iE4JzRl/Hlp9nfZiiWHOMOeipCZF02POrZMjPahFOZga+IgzFYEa1PyxVaPkuwEtxj+IZjxQX2PVTZA8gtwaLf+EjjfFLGCxuAJrygnQ/X3vA+r6Me+OJKFt9IO/LSrV2Biz1P0p0zAgmjpoIdRwn6gGE3/5eiXLIfHoEH9HdF0SWrTSUXdS4hyPFcRcam17oJVp3usYjIc4XVMC+6oTZnwkmvJfwIRN7cdQezWRyhS19qIRtkJxGbTqJJUrfARYIzdc9H6Q4dBucnw+Vc/jNQ1YiAxa79bfbQisG9OtyotO0tHBxsLgFc612+GiJ4oHYe7vudU2ujv6RgRdTBCtA6vmPV1vU7ptEUW1SWgXDkDg65gkaHND8FkrhotrXjnG4FPyTnknO0/5/dg35ZftoQbfLp8GlRHSoJdKSO6abjFOGGvCb94+DW4VkHC4RSlpsEL9nDobOr2zTxrzSBawhLFa1dUNOuKrP8dT7qJM="
+  file: '.\\release.zip'
+  skip_cleanup: true
+  on:
+    tags: true 
